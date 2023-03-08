@@ -18,6 +18,23 @@
 <body>
     <div class="container mt-5">
         <h2 class="mb-3">Jus Tin (Manager)</h2>
+
+        <?php if(isset($_GET['error'])) :?>
+            <div class="alert alert-warning">
+                Cannot upload file
+            </div> 
+        <?php endif ?>
+        <?php if(file_exists('_actions/photos/profile.jpg')) : ?>
+            <img src="_actions/photos/profile.jpg" alt="Profile Picture" class="img-thumbnail mb-3" style="width:200px;">
+        <?php endif ?>
+
+        <form action="_actions/upload.php" method="post" enctype="multipart/form-data">
+            <div class="input-group mb-3">
+                <input type="file" name="photo" class="form-control">
+                <button type="submit" class="btn btn-secondary">Upload</button>
+            </div>
+        </form>
+
         <ul class="list-group">
             <li class="list-group-item">
                 <strong>Email :</strong>justin777@gmail.com

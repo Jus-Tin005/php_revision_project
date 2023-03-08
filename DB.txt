@@ -1,0 +1,154 @@
+SELECT column1, column2, … FROM table;
+SELECT * FROM users
+SELECT id, name, email FROM users ORDER BY name
+SELECT id, name, email FROM users ORDER BY name DESC
+SELECT id, name, email FROM users ORDER BY role_id DESC, name
+SELECT * FROM users WHERE role_id = 2
+SELECT * FROM users WHERE role_id > 1 AND suspended = 0
+SELECT * FROM users LIMIT 10
+SELECT * FROM users LIMIT 5, 10
+SELECT * FROM users WHERE role_id = 1 ORDER BY name LIMIT 10
+
+SELECT users.name, users.role_id, roles.name AS role
+FROM users LEFT JOIN roles
+
+SELECT users.name, users.role_id, roles.name AS role
+FROM users LEFT JOIN roles ON users.role_id = roles.id
+
+SELECT users.name, users.role_id, roles.name AS role
+FROM users RIGHT JOIN roles ON users.role_id = roles.id
+
+SELECT users.name, users.role_id, roles.name AS role
+FROM users INNER JOIN roles ON users.role_id = roles.id
+
+SELECT users.name, users.role_id, roles.name AS role
+FROM users CROSS JOIN roles
+
+
+UPDATE table SET column1=value1, column2=value2, … WHERE filter;
+
+UPDATE users SET role_id = 2, updated_at = NOW() WHERE id = 5
+
+DELETE FROM table WHERE filter;
+
+DELETE FROM users WHERE id = 5
+
+------------------------------------------------------------
+
+# Connect MySQL Database = 1. mysqli function	
+			   2. PDO extension
+
+
+----------------------------------------------------------------------
+
+
+PDO Extension Example =
+
+
+# Syntax
+$db = new PDO(DNS,username,password);
+
+
+
+# connectecting
+
+# Method-1
+$db = new PDO('mysql:dbhost=localhost;dbname=project', 'root', '');
+
+# Method-2
+
+$db = new PDO('mysql:dbhost=localhost;dbname=project', 'root', '', [
+
+	PDO:ATTR_ERRORMODE => PDO::ERRORMODE_WARNING,
+	PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
+]);
+
+---------------------------------------------------------------------------
+
+# ERRORMODE	=	default -	SILENT	=	use it for error.
+# FETCH_MODE	=	default	-	Array	=	data structure. 
+
+
+# FETCH_MODE 3 in PDO	=	a.fetch()	=	read all data
+				b.fetchAll()	=	read data once
+				c.fetchObject()	=	read data once	=	read data as a object before defining FETCH_MODE as a object
+
+-------------------------------------------------------------------------------
+
+# Using fetchAll()
+
+$db = new PDO('mysql:dbhost=localhost;dbname=project', 'root', '', [
+
+	PDO:ATTR_ERRORMODE => PDO::ERRORMODE_WARNING,
+	PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
+]);
+
+
+$statement = $db->query('SELECT * FROM roles');
+$result = $statement->fetchAll();
+print_r($result);
+
+--------------------------------------------------------------------------------
+
+# Using fetch()
+
+$db = new PDO('mysql:dbhost=localhost;dbname=project', 'root', '', [
+
+	PDO:ATTR_ERRORMODE => PDO::ERRORMODE_WARNING,
+	PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
+]);
+
+
+$statement = $db->query('SELECT * FROM roles');
+
+$row_one = $statement->fetch();
+$row_two = $statement->fetch();
+$row_three = $statement->fetch();
+
+print_r($row_one);
+
+----------------------------------------------------------------------------------
+
+# Inserting data
+
+#Method-1
+
+$sql = "INSERT INTO roles(name,value) VALUES('Supervisor',4)";
+$db->query($sql);
+echo $db->lastInsertId();
+ 
+#Method-2 = with Prepare statement	=	: (placeholder)
+
+$sql = "INSERT INTO roles(name,value) VALUES(:name, :value)";
+$statement = $db->prepare($sql);
+
+$statement->excute([
+	':name' => 'God',
+	':value' => 999
+]);
+
+echo $db->lastInsertId();
+
+--------------------------------------------------------------------------------------
+
+$sql = "UPDATE roles SET name=:name WHERE value = 999";
+
+$statement = $db->prepare($sql);
+
+$statement->excute([
+	':name' => 'Superman'
+]);
+
+echo $statement->rowCount();   // 1
+
+#Tips	=	$db->lastInsertId();
+	=	$statement->rowCount();	
+
+------------------------------------------------------------------
+
+$sql = "DELETE FROM roles WHERE id > 3";
+$statement = $db->prepare($db);
+$statement->excute();
+echo $statement->rowCount();
+
+-----------------------------------------------------------------------
