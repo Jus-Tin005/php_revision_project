@@ -1,0 +1,22 @@
+{
+    "name": "datalandtech/php_revision_project",
+    "autoload": {
+        "psr-4": {
+            "Datalandtech\\PhpRevisionProject\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Khun Tun"
+        }
+    ],
+    "require": {
+        "fakerphp/faker": "^1.21"
+    },
+    "autoload" : {
+        "psr-4" : {
+            "Libs\\" : "_classes/Libs/",
+            "Helpers\\" : "_classes/Helpers/"
+        }
+    }
+}

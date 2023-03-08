@@ -59,13 +59,13 @@ $db = new PDO('mysql:dbhost=localhost;dbname=project', 'root', '');
 
 $db = new PDO('mysql:dbhost=localhost;dbname=project', 'root', '', [
 
-	PDO:ATTR_ERRORMODE => PDO::ERRORMODE_WARNING,
+	PDO:ATTR_ERRMODE => PDO::ERRMODE_WARNING,
 	PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
 ]);
 
 ---------------------------------------------------------------------------
 
-# ERRORMODE	=	default -	SILENT	=	use it for error.
+# ERRMODE	=	default -	SILENT	=	use it for error.
 # FETCH_MODE	=	default	-	Array	=	data structure. 
 
 
@@ -79,7 +79,7 @@ $db = new PDO('mysql:dbhost=localhost;dbname=project', 'root', '', [
 
 $db = new PDO('mysql:dbhost=localhost;dbname=project', 'root', '', [
 
-	PDO:ATTR_ERRORMODE => PDO::ERRORMODE_WARNING,
+	PDO:ATTR_ERRMODE => PDO::ERRMODE_WARNING,
 	PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
 ]);
 
@@ -94,7 +94,7 @@ print_r($result);
 
 $db = new PDO('mysql:dbhost=localhost;dbname=project', 'root', '', [
 
-	PDO:ATTR_ERRORMODE => PDO::ERRORMODE_WARNING,
+	PDO:ATTR_ERRMODE => PDO::ERRMODE_WARNING,
 	PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
 ]);
 
@@ -122,7 +122,7 @@ echo $db->lastInsertId();
 $sql = "INSERT INTO roles(name,value) VALUES(:name, :value)";
 $statement = $db->prepare($sql);
 
-$statement->excute([
+$statement->execute([
 	':name' => 'God',
 	':value' => 999
 ]);
@@ -135,7 +135,7 @@ $sql = "UPDATE roles SET name=:name WHERE value = 999";
 
 $statement = $db->prepare($sql);
 
-$statement->excute([
+$statement->execute([
 	':name' => 'Superman'
 ]);
 
@@ -148,7 +148,7 @@ echo $statement->rowCount();   // 1
 
 $sql = "DELETE FROM roles WHERE id > 3";
 $statement = $db->prepare($db);
-$statement->excute();
+$statement->execute();
 echo $statement->rowCount();
 
 -----------------------------------------------------------------------

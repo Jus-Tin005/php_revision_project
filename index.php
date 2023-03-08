@@ -19,15 +19,23 @@
         <div class="wrap">
             <h2 class="h3 mb-3">Login</h2>
 
-            <?php
-                if(isset($_GET['incorrect'])) :
-            ?>
+            <?php if(isset($_GET['registered'])) : ?>
+                <div class="alert alert-success">
+                    Account created. Please login.
+                </div>
+            <?php endif ?>
+
+            <?php if(isset($_GET['suspended'])) : ?>
+                <div class="alert alert-danger">
+                    Your account is suspended.
+                </div>
+            <?php endif ?>
+
+            <?php if(isset($_GET['incorrect'])) : ?>
                     <div class="alert alert-warning">
                         Incorrect Email or Password 
                     </div>
-            <?php 
-                endif
-            ?>
+            <?php endif ?>
 
             <form action="_actions/login.php" method="post">
                 <input type="email" name="email" class="form-control mb-2" placeholder="Email" required>
