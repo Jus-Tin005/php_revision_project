@@ -95,6 +95,6 @@
     </div>
 
 
-    <link href="assets/css/bootstrap.bundle.min.js" rel="stylesheet" type="text/css"/>
+    <script src="assets/css/bootstrap.bundle.min.js" rel="stylesheet" type="text/javascript"></script>
 </body>
 </html>
