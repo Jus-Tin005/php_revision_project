@@ -1,9 +1,19 @@
 <?php
+
+    include("vendor/autoload.php");
+
+    use Helpers\Auth;
+
+    $auth = Auth::check();
+
+
+    /*
     session_start();
     if(!isset($_SESSION['user'])){
         header('location: index.php'); # no space in location: = redircet in php
         exit(); # or die();
     }
+    */
 ?>
 
 <!DOCTYPE html>
@@ -16,16 +26,23 @@
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-    <div class="container mt-5">
-        <h2 class="mb-3">Jus Tin (Manager)</h2>
+    <div class="container mt-5 mb-5">
+        <h2 class="mb-3">
+            <?= $auth->name?>
+            <span class="fw-normal text-muted">
+                (<?= $auth->role?>)
+            </span>
+        </h2>
 
         <?php if(isset($_GET['error'])) :?>
             <div class="alert alert-warning">
                 Cannot upload file
             </div> 
         <?php endif ?>
-        <?php if(file_exists('_actions/photos/profile.jpg')) : ?>
-            <img src="_actions/photos/profile.jpg" alt="Profile Picture" class="img-thumbnail mb-3" style="width:200px;">
+
+        
+        <?php if($auth->photo) : ?>
+            <img src="_actions/photos/<?= $auth->photo ?>" alt="Profile Picture" class="img-thumbnail mb-3" style="width:200px;">
         <?php endif ?>
 
         <form action="_actions/upload.php" method="post" enctype="multipart/form-data">
@@ -37,17 +54,18 @@
 
         <ul class="list-group">
             <li class="list-group-item">
-                <strong>Email :</strong>justin777@gmail.com
+                <strong>Email :</strong><?= $auth->email ?>
             </li>
             <li class="list-group-item">
-                 <strong>Phone :</strong>(+95) 9755033035
+                 <strong>Phone :</strong><?= $auth->phone ?>
             </li>
             <li class="list-group-item">
-                 <strong>Address :</strong>No.62, Tamwe, Yangon, Myanmar
+                 <strong>Address :</strong><?= $auth->address ?>
             </li>
         </ul>
         <br>
-        <a href="_actions/logout.php">Logout</a>
+        <a href="admin.php">Manage Users</a>
+        <a href="_actions/logout.php" class="text-center">Logout</a>
     </div>
 </body>
 </html>
